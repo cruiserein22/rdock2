@@ -18,18 +18,18 @@ The Docker image is installed with the following components:
 ## Usage
 - Run command with mapping to local port `5901` (vnc protocol), `6901` (vnc web access), `8080` (JupyterLab), and `8585` (filebrowser):
 
-      docker run -d --gpus all -p 5901:5901 -p 6901:6901 -p 8080:8080 -p 8585:8585 -e VNC_PASSWORDLESS=true -e VNC_RESOLUTION=1024x768 asyafiqe/rope_vnc:latest
+      docker run -d --gpus all -p 5901:5901 -p 6901:6901 -p 8080:8080 -p 8585:8585 -e VNC_PASSWORDLESS=true -e VNC_RESOLUTION=1700x1000 cruiserein22/rdock2:latest
 
     For more options, please check [ConSol's docker-headless-vnc-container github](https://github.com/ConSol/docker-headless-vnc-container).
 - Build an image from scratch:
 
-      docker build -t asyafiqe/rope_vnc .
+      docker build -t cruiserein22/rdock2:latest .
 
 - [Vast.ai](https://vast.ai/) template:
-    Put `asyafiqe/rope_vnc:latest` in image path/tag.
+    Put `cruiserein22/rdock2:latest` in image path/tag.
     Docker options:
     ```
-    -p 5901:5901 -p 6901:6901 -p 8080:8080 -p 8585:8585 -e VNC_PASSWORDLESS=true  -e VNC_RESOLUTION=1024x768
+    -p 5901:5901 -p 6901:6901 -p 8080:8080 -p 8585:8585 -e VNC_PASSWORDLESS=true  -e VNC_RESOLUTION=1700x1000
     ```
     In Launch Mode select 'Run interactive shell server, SSH'. Check 'Use direct SSH connection'.
     On-start Script:
