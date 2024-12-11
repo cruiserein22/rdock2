@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+﻿#!/bin/bash
 ### every exit != 0 fails the script
 set -e
 
@@ -8,6 +8,6 @@ apt-get install -y vim wget net-tools locales bzip2 procps apt-utils \
     python3-numpy #used for websockify/novnc
 apt-get clean -y
 
-echo "generate locales für en_US.UTF-8"
+echo "generate locales for en_US.UTF-8"
 echo "en_US.UTF-8 UTF-8" > /etc/locale.gen
 locale-gen

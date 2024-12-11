@@ -1,7 +1,8 @@
-#!/usr/bin/env bash
+﻿#!/bin/bash
+### every exit != 0 fails the script
 set -e
 
 echo "Install TigerVNC server"
+apt-get update
 apt-get install -y tigervnc-standalone-server
 apt-get clean -y
-printf '\n# docker-headless-vnc-container:\n$localhost = "no";\n1;\n' >>/etc/tigervnc/vncserver-config-defaults
