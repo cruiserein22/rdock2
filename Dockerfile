@@ -94,7 +94,8 @@ ENV PATH /opt/conda/envs/$CONDA_DEFAULT_ENV/bin:$PATH
 
 ### Install Rope
 WORKDIR /workspace
-RUN git clone https://github.com/Alucard24/Rope.git
+RUN git clone https://github.com/harry2141985/Rope.CPU.git && mv Rope.CPU Rope
+#RUN git clone https://github.com/Alucard24/Rope.git
 WORKDIR /workspace/Rope
 
 ### Install dependencies. Fix Models.py backslash path
