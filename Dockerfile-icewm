@@ -137,6 +137,7 @@ RUN \
     # Part 3: Clean up pip cache to keep the image small
     echo "\n--- All installation attempts are complete. ---" && \
     rm -rf /root/.cache/pip
+RUN pip install --upgrade "numpy<2.0"
 
 COPY ./src/Models.py /workspace/Rope/rope/Models.py
 
