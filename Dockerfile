@@ -94,12 +94,51 @@ ENV PATH /opt/conda/envs/$CONDA_DEFAULT_ENV/bin:$PATH
 
 ### Install Rope
 WORKDIR /workspace
-RUN git clone https://github.com/harry2141985/Rope.CPU.git && mv Rope.CPU Rope
-#RUN git clone https://github.com/Alucard24/Rope.git
+#RUN git clone https://github.com/harry2141985/Rope.CPU.git && mv Rope.CPU Rope
+RUN git clone https://github.com/Alucard24/Rope.git
 WORKDIR /workspace/Rope
 
 ### Install dependencies. Fix Models.py backslash path
-RUN pip install -r ./requirements.txt --no-cache-dir
+#RUN pip install -r ./requirements.txt --no-cache-dir
+### Install dependencies. Fix Models.py backslash path
+# The original 'pip install -r requirements.txt' is replaced with this robust block.
+RUN \
+    # Part 1: Install PyTorch family from the correct server with CUDA 11.8 support
+    echo "--- Installing PyTorch family ---" && \
+    pip install --no-cache-dir torch==2.4.1+cu118 torchvision==0.19.1+cu118 torchaudio==2.4.1+cu118 --extra-index-url https://download.pytorch.org/whl/cu118 && \
+    \
+    # Part 2: Loop through and install all other packages individually.
+    # The '||' ensures that if a package fails, the build continues.
+    echo "\n--- Installing all other packages one by one ---" && \
+    for pkg in \
+        "opencv-python==4.10.0.84" \
+        "scikit-image==0.21.0" \
+        "tk==0.1.0" \
+        "pillow==9.5.0" \
+        "onnx==1.16.1" \
+        "protobuf==4.23.2" \
+        "tqdm" \
+        "ftfy" \
+        "regex" \
+        "customtkinter" \
+        "pyvirtualcam==0.11.1" \
+        "psutil==6.0.0" \
+        "onnxruntime-gpu==1.18.0" \
+        "packaging==24.1" \
+        "tensorrt-cu11==10.4.0" \
+        "numexpr" \
+        "onnxsim" \
+        "kornia" \
+        "requests" \
+    ; do \
+        echo "\n>>> Attempting to install $pkg..." && \
+        pip install --no-cache-dir "$pkg" || echo "❌ WARNING: Failed to install $pkg. Continuing..." ; \
+    done && \
+    \
+    # Part 3: Clean up pip cache to keep the image small
+    echo "\n--- All installation attempts are complete. ---" && \
+    rm -rf /root/.cache/pip
+
 COPY ./src/Models.py /workspace/Rope/rope/Models.py
 
 ### Download models
