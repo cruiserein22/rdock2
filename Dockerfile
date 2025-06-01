@@ -97,7 +97,6 @@ WORKDIR /workspace
 #RUN git clone https://github.com/harry2141985/Rope.CPU.git && mv Rope.CPU Rope
 RUN git clone https://github.com/Alucard24/Rope.git
 WORKDIR /workspace/Rope
-
 ### Install dependencies. Fix Models.py backslash path
 #RUN pip install -r ./requirements.txt --no-cache-dir
 ### Install dependencies. Fix Models.py backslash path
@@ -138,6 +137,7 @@ RUN \
     # Part 3: Clean up pip cache to keep the image small
     echo "\n--- All installation attempts are complete. ---" && \
     rm -rf /root/.cache/pip
+RUN pip install --upgrade "numpy<2.0"
 
 COPY ./src/Models.py /workspace/Rope/rope/Models.py
 
